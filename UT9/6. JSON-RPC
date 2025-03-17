@@ -1,0 +1,40 @@
+# Cómo Conectarse a Odoo Mediante XML-RPC
+
+JSON-RPC es un protocolo que permite interactuar con Odoo desde aplicaciones externas. A través de este protocolo, puedes autenticarte, consultar datos, crear registros, y mucho más. 
+
+Es similar a XML-RPC pero más moderno, eficiente y seguro, funcionando en formato JSON.
+
+---
+
+## Ejemplo Básico de Conexión
+
+### Código de Conexión, autenticación
+
+~~~c#
+
+# Datos de conexión
+url = "canarydev.com"  # Cambiar por la URL real del servidor Odoo
+db = 'SW'  # Base de datos
+username = 'alumno'  # Usuario
+password = 'alumno'  # Contraseña
+
+# Ejemplo de json a enviar al servidor para realizar la autenticación
+"{ \"jsonrpc\": \"2.0\", " +
+    "\"method\": \"call\", " +
+    "\"params\": { " +
+      "\"service\": \"common\", " +
+      "\"method\": \"authenticate\", " +
+      "\"args\": [\"" + db + "\", \"" + username + "\", \"" + password + "\", {}] " +
+   "}, " +
+  "\"id\": " + 1 + "}";
+~~~
+
+### Explicación
+1. **`common, authenticate`**:
+   - Se usa para autenticar al usuario y obtener su ID único (`uid`), devuelto por el servidor.
+   - Si la autenticación falla, el servidor devuelve `False`.
+   - id: es un entero que identifica la petición, el servidor contestará con el mismo id.
+2. Autenticarse es necesario para realizar algunas operaciones mediante el uid.
+---
+
+
